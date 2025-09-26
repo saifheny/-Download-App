@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نبض الأمة - كن جزءاً من النبض</title>
+
+    <!-- Meta Tag for Social Media Share Image -->
+    <meta property="og:title" content="نبض الأمة - كن جزءاً من النبض">
+    <meta property="og:description" content="من أحدث إصداراته. تجربة ليس لها مثيل.">
+    <meta property="og:image" content="https://i.postimg.cc/027cH913/image.png">
+    <meta property="og:url" content="YOUR_WEBSITE_URL_HERE"> <!-- قم بوضع رابط موقعك الفعلي هنا -->
+    <meta name="twitter:card" content="summary_large_image">
+
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         /* --- استيراد الخطوط --- */
         @import url('https://fonts.googleapis.com/css2?family=Changa:wght@700&family=Tajawal:wght@400;700&display=swap');
@@ -28,29 +40,7 @@
             color: var(--text-color);
             font-family: 'Tajawal', sans-serif;
             overflow-x: hidden;
-            cursor: none; /* إخفاء مؤشر الماوس الافتراضي */
             scroll-behavior: smooth;
-        }
-
-        /* --- مؤشر الماوس المخصص --- */
-        .custom-cursor {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 25px;
-            height: 25px;
-            border: 2px solid var(--primary-color);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
-            z-index: 9999;
-        }
-        
-        .custom-cursor.hover {
-             width: 40px;
-             height: 40px;
-             background-color: rgba(0, 240, 255, 0.2);
         }
 
         /* --- خلفية متحركة --- */
@@ -127,7 +117,7 @@
             border: 3px solid var(--primary-color);
             border-radius: 15px;
             padding: 15px 40px;
-            cursor: none; /* استخدام المؤشر المخصص */
+            cursor: pointer; 
             position: relative;
             overflow: hidden;
             transition: color 0.4s, box-shadow 0.4s;
@@ -233,6 +223,123 @@
             animation: scroll-animation 2s infinite;
         }
 
+        /* --- أيقونة المشاركة --- */
+        .share-icon {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s, text-shadow 0.3s;
+        }
+        .share-icon:hover {
+            transform: scale(1.2);
+            text-shadow: 0 0 15px var(--primary-color);
+        }
+
+        /* --- نافذة المشاركة المنبثقة (Modal) --- */
+        .share-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .share-modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .share-modal {
+            background: var(--glass-bg);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease-in-out;
+        }
+        .share-modal-overlay.active .share-modal {
+            transform: scale(1);
+        }
+
+        .share-modal h3 {
+            font-family: 'Changa', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        #qrcode {
+            margin: 20px auto;
+            border: 5px solid var(--text-color);
+            border-radius: 10px;
+            padding: 10px;
+            background: white;
+        }
+        #qrcode canvas, #qrcode img {
+            display: block;
+            margin: auto;
+        }
+
+        .social-links a {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin: 0 15px;
+            transition: color 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .copy-link-container {
+            margin-top: 25px;
+            position: relative;
+        }
+        .copy-link-container input {
+            width: 100%;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            text-align: center;
+            font-size: 1rem;
+        }
+        .copy-link-container button {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        #copy-feedback {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: var(--primary-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
 
         /* --- رسوم متحركة --- */
         @keyframes fadeIn {
@@ -300,22 +407,53 @@
                 width: 120px;
                 height: 120px;
             }
+            .share-icon {
+                font-size: 1.8rem;
+                top: 20px;
+                left: 20px;
+            }
+            .share-modal {
+                padding: 20px;
+            }
+            .social-links a {
+                font-size: 2rem;
+                margin: 0 10px;
+            }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- مؤشر الماوس المخصص -->
-    <div class="custom-cursor"></div>
-
     <!-- الخلفية المتحركة -->
     <div id="particles-js"></div>
+
+    <!-- أيقونة المشاركة -->
+    <i class="fas fa-share-alt share-icon" id="open-share-modal"></i>
+    
+    <!-- نافذة المشاركة -->
+    <div class="share-modal-overlay" id="share-modal-overlay">
+        <div class="share-modal">
+            <h3>شارك النبض</h3>
+            <div id="qrcode"></div>
+            <div class="social-links">
+                <a id="share-facebook" href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a id="share-twitter" href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a id="share-whatsapp" href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a id="share-telegram" href="#" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+            </div>
+            <div class="copy-link-container">
+                <input type="text" id="page-url" readonly>
+                <button id="copy-btn"><i class="fas fa-copy"></i></button>
+            </div>
+             <p id="copy-feedback">تم نسخ الرابط!</p>
+        </div>
+    </div>
+
 
     <!-- القسم الرئيسي -->
     <section class="container hero">
         <div class="logo-container">
-            <!-- تم استخدام الرابط الذي أرسلته للشعار -->
             <img src="https://i.postimg.cc/027cH913/image.png" alt="شعار نبض الأمة" class="logo">
         </div>
         <h1 class="main-title">نبض الأمة</h1>
@@ -349,39 +487,16 @@
 
     <!-- مكتبة الجسيمات المتحركة -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- مكتبة إنشاء QR Code -->
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+
 
     <script>
         // --- إعدادات الخلفية المتحركة ---
         particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#00F0FF" },
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
-                "size": { "value": 3, "random": true, "anim": { "enable": false } },
-                "line_linked": { "enable": true, "distance": 150, "color": "#8A2BE2", "opacity": 0.4, "width": 1 },
-                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
-                "modes": { "grab": { "distance": 400, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 150, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } }
-            },
+            "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#00F0FF" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true, "anim": { "enable": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#8A2BE2", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false } },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 400, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 150, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } } },
             "retina_detect": true
-        });
-
-        // --- كود مؤشر الماوس المخصص ---
-        const cursor = document.querySelector('.custom-cursor');
-        const interactiveElements = document.querySelectorAll('a, button');
-
-        window.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
 
         // --- تأثيرات التمرير ---
@@ -404,20 +519,81 @@
         const heroSection = document.querySelector('.hero');
 
         heroSection.addEventListener('mousemove', (e) => {
-            const { clientX, clientY } = e;
-            const { offsetWidth, offsetHeight } = heroSection;
-            
-            // حساب الحركة من -20 إلى +20 درجة
-            const rotateX = ((clientY / offsetHeight) - 0.5) * 40; 
-            const rotateY = ((clientX / offsetWidth) - 0.5) * -40;
+            if (window.innerWidth > 768) { // تفعيل التأثير على الشاشات الكبيرة فقط
+                const { clientX, clientY } = e;
+                const { offsetWidth, offsetHeight } = heroSection;
+                
+                const rotateX = ((clientY / offsetHeight) - 0.5) * 40; 
+                const rotateY = ((clientX / offsetWidth) - 0.5) * -40;
 
-            logo.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.1)`;
+                logo.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.1)`;
+            }
         });
 
         heroSection.addEventListener('mouseleave', () => {
             logo.style.transform = 'rotateX(0) rotateY(0) scale(1)';
         });
 
+
+        // --- وظائف نافذة المشاركة ---
+        const shareModalOverlay = document.getElementById('share-modal-overlay');
+        const openShareModalBtn = document.getElementById('open-share-modal');
+        const qrcodeContainer = document.getElementById('qrcode');
+        const pageUrlInput = document.getElementById('page-url');
+        const copyBtn = document.getElementById('copy-btn');
+        const copyFeedback = document.getElementById('copy-feedback');
+        
+        const pageUrl = window.location.href;
+        const pageTitle = document.title;
+        let qrcode = null;
+
+        // إعداد روابط المشاركة
+        document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+        document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(pageTitle)}`;
+        document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(pageTitle + " " + pageUrl)}`;
+        document.getElementById('share-telegram').href = `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(pageTitle)}`;
+        
+        pageUrlInput.value = pageUrl;
+
+        openShareModalBtn.addEventListener('click', () => {
+            shareModalOverlay.classList.add('active');
+            // إنشاء QR Code فقط عند الفتح لأول مرة
+            if (!qrcode) {
+                qrcode = new QRCode(qrcodeContainer, {
+                    text: pageUrl,
+                    width: 150,
+                    height: 150,
+                    colorDark : "#010008",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+            }
+        });
+
+        // إغلاق النافذة عند الضغط خارجها
+        shareModalOverlay.addEventListener('click', (e) => {
+            if (e.target === shareModalOverlay) {
+                shareModalOverlay.classList.remove('active');
+            }
+        });
+        
+        // وظيفة نسخ الرابط
+        copyBtn.addEventListener('click', () => {
+            pageUrlInput.select();
+            pageUrlInput.setSelectionRange(0, 99999); // For mobile devices
+
+            try {
+                navigator.clipboard.writeText(pageUrlInput.value);
+                copyFeedback.style.opacity = '1';
+                setTimeout(() => {
+                    copyFeedback.style.opacity = '0';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                // Fallback for older browsers
+                document.execCommand('copy');
+            }
+        });
 
     </script>
 </body>
