@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نبض الأمة - كن جزءاً من النبض</title>
+    <style>
+        /* --- استيراد الخطوط --- */
+        @import url('https://fonts.googleapis.com/css2?family=Changa:wght@700&family=Tajawal:wght@400;700&display=swap');
+
+        /* --- إعدادات أساسية --- */
+        :root {
+            --primary-color: #00F0FF; /* أزرق نيون */
+            --secondary-color: #8A2BE2; /* بنفسجي كهربائي */
+            --background-color: #010008; /* أسود فلكي */
+            --text-color: #FFFFFF;
+            --glass-bg: rgba(10, 10, 25, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Tajawal', sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* إخفاء مؤشر الماوس الافتراضي */
+            scroll-behavior: smooth;
+        }
+
+        /* --- مؤشر الماوس المخصص --- */
+        .custom-cursor {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 25px;
+            height: 25px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            z-index: 9999;
+        }
+        
+        .custom-cursor.hover {
+             width: 40px;
+             height: 40px;
+             background-color: rgba(0, 240, 255, 0.2);
+        }
+
+        /* --- خلفية متحركة --- */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* --- تنسيق المحتوى الرئيسي --- */
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        /* --- الشعار --- */
+        .logo-container {
+            margin-bottom: 25px;
+            perspective: 1000px; /* لإعطاء عمق للتأثير ثلاثي الأبعاد */
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            transition: transform 0.5s ease-out;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .logo:hover {
+            transform: translateZ(20px) scale(1.1);
+        }
+        
+        /* --- العناوين والنصوص --- */
+        .main-title {
+            font-family: 'Changa', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 40px var(--secondary-color);
+            margin-bottom: 1rem;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* --- زر التحميل التفاعلي --- */
+        .download-btn {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            background: transparent;
+            border: 3px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 15px 40px;
+            cursor: none; /* استخدام المؤشر المخصص */
+            position: relative;
+            overflow: hidden;
+            transition: color 0.4s, box-shadow 0.4s;
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            transition: left 0.5s;
+        }
+
+        .download-btn:hover {
+            color: var(--background-color);
+            box-shadow: 0 0 25px var(--primary-color), 0 0 50px var(--primary-color);
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        /* --- قسم الشفافية --- */
+        .mission-section {
+            width: 100%;
+            min-height: 100vh;
+            padding: 80px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mission-card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            opacity: 0; /* يبدأ مخفياً */
+            transform: translateY(50px);
+            transition: opacity 1s, transform 1s;
+        }
+
+        .mission-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mission-card h2 {
+            font-family: 'Changa', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+
+        .mission-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .mission-card .highlight {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .mission-card .final-statement {
+            font-style: italic;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* --- أيقونة التمرير لأسفل --- */
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--text-color);
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        .scroll-down::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--text-color);
+            border-radius: 50%;
+            animation: scroll-animation 2s infinite;
+        }
+
+
+        /* --- رسوم متحركة --- */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--secondary-color);
+            }
+            to {
+                text-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--secondary-color), 0 0 40px var(--secondary-color);
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes scroll-animation {
+            0% {
+                transform: translate(-50%, 0);
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+            80% {
+                transform: translate(-50%, 20px);
+                opacity: 0;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* --- التجاوب مع الشاشات الصغيرة --- */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            .download-btn {
+                font-size: 1.2rem;
+                padding: 12px 30px;
+            }
+            .mission-card {
+                padding: 25px;
+            }
+            .mission-card h2 {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            .logo {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- مؤشر الماوس المخصص -->
+    <div class="custom-cursor"></div>
+
+    <!-- الخلفية المتحركة -->
+    <div id="particles-js"></div>
+
+    <!-- القسم الرئيسي -->
+    <section class="container hero">
+        <div class="logo-container">
+            <!-- تم استخدام الرابط الذي أرسلته للشعار -->
+            <img src="https://i.postimg.cc/027cH913/image.png" alt="شعار نبض الأمة" class="logo">
+        </div>
+        <h1 class="main-title">نبض الأمة</h1>
+        <p class="subtitle">من أحدث إصداراته. تجربة ليس لها مثيل.</p>
+        <a href="https://apk.e-droid.net/apk/app3454625-xg4kt8.apk?v=30" class="download-btn" target="_blank">حمّل النبض الآن</a>
+        
+        <a href="#mission" class="scroll-down" aria-label="التمرير للأسفل"></a>
+    </section>
+
+    <!-- قسم الشفافية -->
+    <section id="mission" class="mission-section">
+        <div class="mission-card">
+            <h2>🔹 تنويه مهم وشفاف</h2>
+            <p>
+                كل عائدات الإعلانات يتم تقسيمها بشفافية إلى قسمين:
+                <br><br>
+                <span class="highlight">1️⃣ البنية التحتية والخدمات:</span> لتغطية تكاليف التشغيل، السيرفرات، وضمان استمرار الخدمة بجودة عالية.
+                <br>
+                <span class="highlight">2️⃣ القضية الفلسطينية:</span> الجزء الثاني يذهب مباشرةً لدعم الشعب الفلسطيني وقضيته العادلة.
+            </p>
+            <p>
+                <span class="highlight">💡 ولضمان الشفافية الكاملة:</span>
+                <br>
+                مع نهاية كل شهر، إذا كان هناك أرباح من الإعلانات، سيتم نشر فيديو رسمي على المنصة يوضح خطوات تحويل نصف هذه الأرباح مباشرةً لدعم القضية الفلسطينية، بحيث يرى الجميع ما يحدث خطوة بخطوة دون أي غموض.
+            </p>
+            <p class="final-statement">
+                نحن نؤمن أن المصداقية لا تُقال بالكلام فقط، بل تُثبت بالفعل أمام أعين الناس. 🌍🇵🇸
+            </p>
+        </div>
+    </section>
+
+    <!-- مكتبة الجسيمات المتحركة -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+        // --- إعدادات الخلفية المتحركة ---
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00F0FF" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
+                "size": { "value": 3, "random": true, "anim": { "enable": false } },
+                "line_linked": { "enable": true, "distance": 150, "color": "#8A2BE2", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "modes": { "grab": { "distance": 400, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 150, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } }
+            },
+            "retina_detect": true
+        });
+
+        // --- كود مؤشر الماوس المخصص ---
+        const cursor = document.querySelector('.custom-cursor');
+        const interactiveElements = document.querySelectorAll('a, button');
+
+        window.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // --- تأثيرات التمرير ---
+        const missionCard = document.querySelector('.mission-card');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.5 // يظهر العنصر عند رؤية 50% منه
+        });
+
+        observer.observe(missionCard);
+        
+        // --- تأثير 3D على الشعار عند حركة الماوس ---
+        const logo = document.querySelector('.logo');
+        const heroSection = document.querySelector('.hero');
+
+        heroSection.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const { offsetWidth, offsetHeight } = heroSection;
+            
+            // حساب الحركة من -20 إلى +20 درجة
+            const rotateX = ((clientY / offsetHeight) - 0.5) * 40; 
+            const rotateY = ((clientX / offsetWidth) - 0.5) * -40;
+
+            logo.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.1)`;
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            logo.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+        });
+
+
+    </script>
+</body>
+</html>
