@@ -3,598 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نبض الأمة - كن جزءاً من النبض</title>
-
-    <!-- Meta Tag for Social Media Share Image -->
-    <meta property="og:title" content="نبض الأمة - كن جزءاً من النبض">
-    <meta property="og:description" content="من أحدث إصداراته. تجربة ليس لها مثيل.">
-    <meta property="og:image" content="https://i.postimg.cc/027cH913/image.png">
-    <meta property="og:url" content="YOUR_WEBSITE_URL_HERE"> <!-- قم بوضع رابط موقعك الفعلي هنا -->
-    <meta name="twitter:card" content="summary_large_image">
-
-
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <title>تحميل تطبيق نبض الأمة</title>
     <style>
-        /* --- استيراد الخطوط --- */
-        @import url('https://fonts.googleapis.com/css2?family=Changa:wght@700&family=Tajawal:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@700&display=swap');
 
-        /* --- إعدادات أساسية --- */
-        :root {
-            --primary-color: #00F0FF; /* أزرق نيون */
-            --secondary-color: #8A2BE2; /* بنفسجي كهربائي */
-            --background-color: #010008; /* أسود فلكي */
-            --text-color: #FFFFFF;
-            --glass-bg: rgba(10, 10, 25, 0.35);
-        }
-
-        * {
+        /* إعدادات أساسية للصفحة (نفس تصميم المنصة الأولى) */
+        body {
             margin: 0;
-            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            background-color: #ffffff;
+            color: #333;
             box-sizing: border-box;
         }
 
-        body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            font-family: 'Tajawal', sans-serif;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        /* --- خلفية متحركة --- */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        /* --- تنسيق المحتوى الرئيسي --- */
-        .container {
-            width: 100%;
-            min-height: 100vh;
+        .content-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             text-align: center;
-            padding: 20px;
-            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 25px;
+            box-sizing: border-box;
         }
         
-        .hero {
-            min-height: 100vh;
+        /* حاوية الشعار */
+        .logo-container {
+            background-color: white;
+            border-radius: 24px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            margin-bottom: 25px;
+            width: 150px; /* تحديد عرض ثابت للحاوية */
+            height: 150px; /* تحديد ارتفاع ثابت للحاوية */
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards;
-        }
-
-        /* --- الشعار --- */
-        .logo-container {
-            margin-bottom: 25px;
-            perspective: 1000px; /* لإعطاء عمق للتأثير ثلاثي الأبعاد */
         }
 
         .logo {
-            width: 150px;
-            height: 150px;
-            transition: transform 0.5s ease-out;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .logo:hover {
-            transform: translateZ(20px) scale(1.1);
-        }
-        
-        /* --- العناوين والنصوص --- */
-        .main-title {
-            font-family: 'Changa', sans-serif;
-            font-size: 5rem;
-            font-weight: 700;
-            text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 40px var(--secondary-color);
-            margin-bottom: 1rem;
-            animation: textGlow 2s ease-in-out infinite alternate;
+            width: 100px; /* تعديل حجم الشعار الجديد */
+            height: auto;
+            display: block;
         }
 
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2.5rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* --- زر التحميل التفاعلي --- */
-        .download-btn {
-            font-family: 'Tajawal', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-color);
-            background: transparent;
-            border: 3px solid var(--primary-color);
-            border-radius: 15px;
-            padding: 15px 40px;
-            cursor: pointer; 
-            position: relative;
-            overflow: hidden;
-            transition: color 0.4s, box-shadow 0.4s;
-            box-shadow: 0 0 15px var(--primary-color);
-        }
-
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-            transition: left 0.5s;
-        }
-
-        .download-btn:hover {
-            color: var(--background-color);
-            box-shadow: 0 0 25px var(--primary-color), 0 0 50px var(--primary-color);
-        }
-
-        .download-btn:hover::before {
-            left: 100%;
-        }
-
-        /* --- قسم الشفافية --- */
-        .mission-section {
-            width: 100%;
-            min-height: 100vh;
-            padding: 80px 20px;
+        /* حاوية العنوان وزر المشاركة */
+        .title-container {
             display: flex;
-            justify-content: center;
             align-items: center;
-        }
-
-        .mission-card {
-            background: var(--glass-bg);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 800px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            opacity: 0; /* يبدأ مخفياً */
-            transform: translateY(50px);
-            transition: opacity 1s, transform 1s;
-        }
-
-        .mission-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .mission-card h2 {
-            font-family: 'Changa', sans-serif;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-            text-shadow: 0 0 5px var(--primary-color);
-        }
-
-        .mission-card p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .mission-card .highlight {
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .mission-card .final-statement {
-            font-style: italic;
-            margin-top: 30px;
-            color: rgba(255, 255, 255, 0.8);
+            justify-content: center;
+            gap: 15px;
+            position: relative;
         }
         
-        /* --- أيقونة التمرير لأسفل --- */
-        .scroll-down {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 50px;
-            border: 2px solid var(--text-color);
-            border-radius: 50px;
-            cursor: pointer;
-        }
-        .scroll-down::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 6px;
-            background: var(--text-color);
+        /* زر المشاركة */
+        .share-btn {
+            background-color: #f0f2f5;
+            border: none;
             border-radius: 50%;
-            animation: scroll-animation 2s infinite;
-        }
-
-        /* --- أيقونة المشاركة --- */
-        .share-icon {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            font-size: 2rem;
-            color: var(--primary-color);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            z-index: 1000;
-            transition: transform 0.3s, text-shadow 0.3s;
-        }
-        .share-icon:hover {
-            transform: scale(1.2);
-            text-shadow: 0 0 15px var(--primary-color);
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        /* --- نافذة المشاركة المنبثقة (Modal) --- */
-        .share-modal-overlay {
+        .share-btn:hover {
+            background-color: #e4e6eb;
+            transform: scale(1.1);
+        }
+        
+        .share-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: #333;
+        }
+        
+        /* إشعار تم النسخ */
+        .tooltip {
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        
+        .share-btn.show-tooltip .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* عنوان التطبيق */
+        .app-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.2em; /* تعديل حجم الخط ليتناسب مع الاسم */
+            font-weight: 700;
+            margin: 0;
+            color: #1c1e21;
+        }
+
+        /* وصف التطبيق */
+        .app-description {
+            font-size: 1.1em;
+            color: #555;
+            margin: 10px 0 30px 0;
+        }
+
+        /* === قسم معرض الصور === */
+        .gallery {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 12px;
+            padding: 10px 0;
+            margin-bottom: 25px;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+        }
+        .gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .gallery-item {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: auto;
+            height: 250px;
+            border-radius: 12px;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.03);
+        }
+
+        /* === تصميم الـ Lightbox (عارض الصور) === */
+        .lightbox {
+            display: none;
             position: fixed;
+            z-index: 1000;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            display: flex;
+            background-color: rgba(0, 0, 0, 0.85);
             justify-content: center;
             align-items: center;
-            z-index: 9998;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .share-modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
         }
 
-        .share-modal {
-            background: var(--glass-bg);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 20px;
-            padding: 30px 40px;
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-            transform: scale(0.9);
-            transition: transform 0.3s ease-in-out;
-        }
-        .share-modal-overlay.active .share-modal {
-            transform: scale(1);
-        }
-
-        .share-modal h3 {
-            font-family: 'Changa', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-
-        #qrcode {
-            margin: 20px auto;
-            border: 5px solid var(--text-color);
-            border-radius: 10px;
-            padding: 10px;
-            background: white;
-        }
-        #qrcode canvas, #qrcode img {
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85%;
             display: block;
             margin: auto;
         }
 
-        .social-links a {
-            font-size: 2.5rem;
-            color: var(--text-color);
-            margin: 0 15px;
-            transition: color 0.3s, transform 0.3s;
+        .lightbox-close, .lightbox-prev, .lightbox-next {
             cursor: pointer;
-        }
-        .social-links a:hover {
-            color: var(--primary-color);
-            transform: scale(1.2);
-        }
-
-        .copy-link-container {
-            margin-top: 25px;
-            position: relative;
-        }
-        .copy-link-container input {
-            width: 100%;
-            padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--primary-color);
-            border-radius: 8px;
-            color: var(--text-color);
-            text-align: center;
-            font-size: 1rem;
-        }
-        .copy-link-container button {
             position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        #copy-feedback {
-            font-size: 0.9rem;
-            margin-top: 10px;
-            color: var(--primary-color);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-
-        /* --- رسوم متحركة --- */
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes textGlow {
-            from {
-                text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--secondary-color);
-            }
-            to {
-                text-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--secondary-color), 0 0 40px var(--secondary-color);
-            }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            user-select: none;
         }
         
-        @keyframes scroll-animation {
-            0% {
-                transform: translate(-50%, 0);
-                opacity: 0;
-            }
-            40% {
-                opacity: 1;
-            }
-            80% {
-                transform: translate(-50%, 20px);
-                opacity: 0;
-            }
-            100% {
-                opacity: 0;
-            }
+        .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover {
+            color: #bbb;
         }
 
-        /* --- التجاوب مع الشاشات الصغيرة --- */
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: 3rem;
-            }
-            .subtitle {
-                font-size: 1.2rem;
-            }
-            .download-btn {
-                font-size: 1.2rem;
-                padding: 12px 30px;
-            }
-            .mission-card {
-                padding: 25px;
-            }
-            .mission-card h2 {
-                font-size: 2rem;
-            }
+        .lightbox-close { top: 20px; right: 35px; }
+        .lightbox-prev, .lightbox-next { top: 50%; transform: translateY(-50%); padding: 16px; }
+        .lightbox-prev { left: 10px; }
+        .lightbox-next { right: 10px; }
+
+        /* نص التنويه الإضافي */
+        .extra-info {
+            font-size: 1em;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: right;
+            border: 1px solid #eee;
         }
-        @media (max-width: 480px) {
-            .main-title {
-                font-size: 2.5rem;
-            }
-            .logo {
-                width: 120px;
-                height: 120px;
-            }
-            .share-icon {
-                font-size: 1.8rem;
-                top: 20px;
-                left: 20px;
-            }
-            .share-modal {
-                padding: 20px;
-            }
-            .social-links a {
-                font-size: 2rem;
-                margin: 0 10px;
-            }
+        .extra-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .extra-info .highlight {
+            font-weight: bold;
+            color: #007BFF;
         }
 
+
+        /* زر التحميل */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #007BFF, #00C6FF);
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1em;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(0, 123, 255, 0.4);
+        }
+        .download-btn .icon {
+            margin-left: 10px;
+            width: 20px;
+            height: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- الخلفية المتحركة -->
-    <div id="particles-js"></div>
-
-    <!-- أيقونة المشاركة -->
-    <i class="fas fa-share-alt share-icon" id="open-share-modal"></i>
-    
-    <!-- نافذة المشاركة -->
-    <div class="share-modal-overlay" id="share-modal-overlay">
-        <div class="share-modal">
-            <h3>شارك النبض</h3>
-            <div id="qrcode"></div>
-            <div class="social-links">
-                <a id="share-facebook" href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                <a id="share-twitter" href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a id="share-whatsapp" href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a id="share-telegram" href="#" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-            </div>
-            <div class="copy-link-container">
-                <input type="text" id="page-url" readonly>
-                <button id="copy-btn"><i class="fas fa-copy"></i></button>
-            </div>
-             <p id="copy-feedback">تم نسخ الرابط!</p>
-        </div>
+    <!-- عارض الصور (Lightbox) -->
+    <div id="myLightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightboxImg">
+        <a class="lightbox-prev">&#10094;</a>
+        <a class="lightbox-next">&#10095;</a>
     </div>
 
-
-    <!-- القسم الرئيسي -->
-    <section class="container hero">
+    <!-- المحتوى الرئيسي للصفحة -->
+    <div class="content-wrapper">
+        
         <div class="logo-container">
             <img src="https://i.postimg.cc/027cH913/image.png" alt="شعار نبض الأمة" class="logo">
         </div>
-        <h1 class="main-title">نبض الأمة</h1>
-        <p class="subtitle">من أحدث إصداراته. تجربة ليس لها مثيل.</p>
-        <a href="https://apk.e-droid.net/apk/app3454625-xg4kt8.apk?v=30" class="download-btn" target="_blank">حمّل النبض الآن</a>
         
-        <a href="#mission" class="scroll-down" aria-label="التمرير للأسفل"></a>
-    </section>
+        <div class="title-container">
+            <h1 class="app-title">نبض الأمة</h1>
+            <button class="share-btn" id="shareButton" aria-label="مشاركة">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg>
+                <div class="tooltip">تم النسخ!</div>
+            </button>
+        </div>
 
-    <!-- قسم الشفافية -->
-    <section id="mission" class="mission-section">
-        <div class="mission-card">
-            <h2>🔹 تنويه مهم وشفاف</h2>
+        <p class="app-description">من أحدث إصداراته. تجربة ليس لها مثيل.</p>
+
+        <!-- معرض الصور (مع الصور الجديدة) -->
+        <div class="gallery">
+            <!-- سيتم إضافة الصور هنا بواسطة جافاسكريبت -->
+        </div>
+        
+        <!-- القسم الخاص بالنص الإضافي الذي طلبته -->
+        <div class="extra-info">
+            <h3>🔹 تنويه مهم وشفاف</h3>
             <p>
                 كل عائدات الإعلانات يتم تقسيمها بشفافية إلى قسمين:
-                <br><br>
-                <span class="highlight">1️⃣ البنية التحتية والخدمات:</span> لتغطية تكاليف التشغيل، السيرفرات، وضمان استمرار الخدمة بجودة عالية.
                 <br>
-                <span class="highlight">2️⃣ القضية الفلسطينية:</span> الجزء الثاني يذهب مباشرةً لدعم الشعب الفلسطيني وقضيته العادلة.
+                <span class="highlight">1. البنية التحتية والخدمات:</span> لتغطية تكاليف التشغيل والسيرفرات.
+                <br>
+                <span class="highlight">2. القضية الفلسطينية:</span> الجزء الثاني يذهب مباشرةً لدعم الشعب الفلسطيني.
             </p>
             <p>
-                <span class="highlight">💡 ولضمان الشفافية الكاملة:</span>
-                <br>
-                مع نهاية كل شهر، إذا كان هناك أرباح من الإعلانات، سيتم نشر فيديو رسمي على المنصة يوضح خطوات تحويل نصف هذه الأرباح مباشرةً لدعم القضية الفلسطينية، بحيث يرى الجميع ما يحدث خطوة بخطوة دون أي غموض.
-            </p>
-            <p class="final-statement">
-                نحن نؤمن أن المصداقية لا تُقال بالكلام فقط، بل تُثبت بالفعل أمام أعين الناس. 🌍🇵🇸
+                <span class="highlight">💡 لضمان الشفافية الكاملة:</span>
+                مع نهاية كل شهر، سيتم نشر فيديو رسمي يوضح خطوات تحويل نصف الأرباح لدعم القضية.
             </p>
         </div>
-    </section>
 
-    <!-- مكتبة الجسيمات المتحركة -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <!-- مكتبة إنشاء QR Code -->
-    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+        <a href="https://apk.e-droid.net/apk/app3454625-xg4kt8.apk?v=30" class="download-btn">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+            </svg>
+            <span>تنزيل التطبيق</span>
+        </a>
 
+    </div>
 
     <script>
-        // --- إعدادات الخلفية المتحركة ---
-        particlesJS("particles-js", {
-            "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#00F0FF" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true, "anim": { "enable": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#8A2BE2", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false } },
-            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 400, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 150, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } } },
-            "retina_detect": true
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryContainer = document.querySelector('.gallery');
+            const lightbox = document.getElementById('myLightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const closeBtn = document.querySelector('.lightbox-close');
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
 
-        // --- تأثيرات التمرير ---
-        const missionCard = document.querySelector('.mission-card');
+            // مصفوفة تحتوي على روابط الصور الجديدة
+            const images = [
+                "https://i.postimg.cc/v8KdCZVh/f19e4620-baf5-46cc-913f-330e617a43fe.jpg",
+                "https://i.postimg.cc/P5WsLbFF/f4bb7672-1109-432e-b26e-ecd976ddc63f.jpg",
+                "https://i.postimg.cc/2jgShw2k/d9cd9709-974f-4fce-9b38-f7d64d11870b.jpg",
+                "https://i.postimg.cc/pdVWR1XQ/f355a8a4-3b00-41e8-8b65-320fa56643b5.jpg"
+            ];
 
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+            let currentIndex = 0;
+
+            images.forEach((src, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `لقطة شاشة للتطبيق ${index + 1}`;
+                galleryItem.appendChild(img);
+                galleryContainer.appendChild(galleryItem);
+                galleryItem.addEventListener('click', () => openLightbox(index));
+            });
+
+            function openLightbox(index) {
+                currentIndex = index;
+                lightboxImg.src = images[currentIndex];
+                lightbox.style.display = 'flex';
+            }
+
+            function closeLightbox() { lightbox.style.display = 'none'; }
+            function showNextImage() {
+                currentIndex = (currentIndex + 1) % images.length;
+                lightboxImg.src = images[currentIndex];
+            }
+            function showPrevImage() {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                lightboxImg.src = images[currentIndex];
+            }
+
+            closeBtn.addEventListener('click', closeLightbox);
+            nextBtn.addEventListener('click', showNextImage);
+            prevBtn.addEventListener('click', showPrevImage);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            // --- كود زر المشاركة (نفس كود المنصة الأولى) ---
+            const shareButton = document.getElementById('shareButton');
+            
+            shareButton.addEventListener('click', async () => {
+                const shareData = {
+                    title: document.title,
+                    text: 'تحميل تطبيق نبض الأمة الرائع!',
+                    url: window.location.href
+                };
+
+                if (navigator.share) {
+                    try {
+                        await navigator.share(shareData);
+                    } catch (err) {
+                        console.error('خطأ في المشاركة:', err);
+                    }
+                } else {
+                    try {
+                        await navigator.clipboard.writeText(window.location.href);
+                        shareButton.classList.add('show-tooltip');
+                        setTimeout(() => {
+                            shareButton.classList.remove('show-tooltip');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('فشل نسخ الرابط:', err);
+                        alert('فشل نسخ الرابط، يرجى نسخه يدويًا.');
+                    }
                 }
             });
-        }, {
-            threshold: 0.5 // يظهر العنصر عند رؤية 50% منه
         });
-
-        observer.observe(missionCard);
-        
-        // --- تأثير 3D على الشعار عند حركة الماوس ---
-        const logo = document.querySelector('.logo');
-        const heroSection = document.querySelector('.hero');
-
-        heroSection.addEventListener('mousemove', (e) => {
-            if (window.innerWidth > 768) { // تفعيل التأثير على الشاشات الكبيرة فقط
-                const { clientX, clientY } = e;
-                const { offsetWidth, offsetHeight } = heroSection;
-                
-                const rotateX = ((clientY / offsetHeight) - 0.5) * 40; 
-                const rotateY = ((clientX / offsetWidth) - 0.5) * -40;
-
-                logo.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.1)`;
-            }
-        });
-
-        heroSection.addEventListener('mouseleave', () => {
-            logo.style.transform = 'rotateX(0) rotateY(0) scale(1)';
-        });
-
-
-        // --- وظائف نافذة المشاركة ---
-        const shareModalOverlay = document.getElementById('share-modal-overlay');
-        const openShareModalBtn = document.getElementById('open-share-modal');
-        const qrcodeContainer = document.getElementById('qrcode');
-        const pageUrlInput = document.getElementById('page-url');
-        const copyBtn = document.getElementById('copy-btn');
-        const copyFeedback = document.getElementById('copy-feedback');
-        
-        const pageUrl = window.location.href;
-        const pageTitle = document.title;
-        let qrcode = null;
-
-        // إعداد روابط المشاركة
-        document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
-        document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(pageTitle)}`;
-        document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(pageTitle + " " + pageUrl)}`;
-        document.getElementById('share-telegram').href = `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(pageTitle)}`;
-        
-        pageUrlInput.value = pageUrl;
-
-        openShareModalBtn.addEventListener('click', () => {
-            shareModalOverlay.classList.add('active');
-            // إنشاء QR Code فقط عند الفتح لأول مرة
-            if (!qrcode) {
-                qrcode = new QRCode(qrcodeContainer, {
-                    text: pageUrl,
-                    width: 150,
-                    height: 150,
-                    colorDark : "#010008",
-                    colorLight : "#ffffff",
-                    correctLevel : QRCode.CorrectLevel.H
-                });
-            }
-        });
-
-        // إغلاق النافذة عند الضغط خارجها
-        shareModalOverlay.addEventListener('click', (e) => {
-            if (e.target === shareModalOverlay) {
-                shareModalOverlay.classList.remove('active');
-            }
-        });
-        
-        // وظيفة نسخ الرابط
-        copyBtn.addEventListener('click', () => {
-            pageUrlInput.select();
-            pageUrlInput.setSelectionRange(0, 99999); // For mobile devices
-
-            try {
-                navigator.clipboard.writeText(pageUrlInput.value);
-                copyFeedback.style.opacity = '1';
-                setTimeout(() => {
-                    copyFeedback.style.opacity = '0';
-                }, 2000);
-            } catch (err) {
-                console.error('Failed to copy: ', err);
-                // Fallback for older browsers
-                document.execCommand('copy');
-            }
-        });
-
     </script>
 </body>
 </html>
